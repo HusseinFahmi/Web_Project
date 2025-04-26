@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPORT TIME GYM - نادي وقت الرياضة</title>
+    <!-- Bootstrap CSS (للمساعدة في التنسيق والشبكة) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="./image/شعار النادي.jpg">
+
+    <style>
+        /* --- Embedded CSS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #f0a500;
+            --secondary-color: #1a1a1a;
+            --light-bg: #f8f9fa;
+            --dark-text: #212529;
+            --light-text: #f1f1f1;
+            --section-padding: 70px 0; /* زيادة الهامش قليلاً */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 70px; /* Adjust for fixed navbar height */ }
+        body { font-family: 'Cairo', sans-serif; line-height: 1.7; color: var(--dark-text); background-color: var(--light-bg); }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('./image/الرئيسية.jpg') no-repeat center center/cover; /* استخدام المسار الصحيح */
+            min-height: 100vh; color: var(--light-text); display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center; position: relative;
+        }
+
+        /* Navbar */
+        #navbar {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(8px);
+            padding: 10px 0; z-index: 1000; display: flex; justify-content: space-around;
+            align-items: center; transition: background-color 0.3s ease, padding 0.3s ease;
+        }
+        #navbar.scrolled { background: var(--secondary-color); padding: 5px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        #navbar img { height: 60px; transition: height 0.3s ease; }
+        #navbar.scrolled img { height: 50px; }
+        #navbar nav ul { display: flex; }
+        #navbar nav ul li { margin: 0 15px; }
+        #navbar nav ul li a { color: var(--light-text); font-weight: 600; padding: 8px 0; position: relative; transition: color 0.3s ease; }
+        #navbar nav ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 0; right: 0; background-color: var(--primary-color); transition: width 0.4s ease; }
+        #navbar nav ul li a:hover, #navbar nav ul li a.active { color: var(--primary-color); }
+        #navbar nav ul li a:hover::after, #navbar nav ul li a.active::after{ width: 100%; left: 0; right: auto; }
+
+        /* Header Content */
+        header .content { margin-top: 80px; /* animation: fadeInDown 1s ease-out; /* تم استبداله بـ JS */ }
+        header .animated-title span { /* لتأثير ظهور الكلمات */
+             display: inline-block;
+             opacity: 0;
+             transform: translateY(20px);
+             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        header h1 { font-size: 3.5rem; margin-bottom: 10px; font-weight: 700; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
+        header h1 span.primary-text { color: var(--primary-color); }
+        header h2 { font-size: 2rem; margin-bottom: 20px; font-weight: 600; opacity: 0.9; } /* العنوان الفرعي الأصلي */
+        header p { font-size: 1.2rem; margin-bottom: 35px; max-width: 650px; margin-left: auto; margin-right: auto; }
+
+        /* Buttons */
+        .btn { display: inline-block; padding: 12px 35px; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; font-size: 0.9rem; }
+        .btn-primary { background-color: var(--primary-color); color: var(--secondary-color); }
+        .btn-primary:hover { background-color: #d48f00; transform: translateY(-4px) scale(1.03); box-shadow: 0 6px 18px rgba(240, 165, 0, 0.45); }
+        .btn-secondary { background-color: var(--secondary-color); color: var(--light-text); }
+        .btn-secondary:hover { background-color: #333; transform: translateY(-4px) scale(1.03); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3); }
+        .btn-third { background: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); }
+        .btn-third:hover { background-color: var(--primary-color); color: var(--secondary-color); transform: translateY(-4px) scale(1.03); }
+
+        /* General Section Styling */
+        section { padding: var(--section-padding); opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        section.visible { opacity: 1; transform: translateY(0); }
+        .title { text-align: center; margin-bottom: 60px; }
+        .title h2 { font-size: 2.5rem; margin-bottom: 15px; font-weight: 700; color: var(--secondary-color); position: relative; display: inline-block; padding-bottom: 10px; }
+        .title h2::after { content: ''; position: absolute; width: 70px; height: 4px; background-color: var(--primary-color); bottom: 0px; left: 50%; transform: translateX(-50%); border-radius: 2px; }
+        .title p { color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        /* About Section */
+        #about { background-color: #fff; } /* خلفية بيضاء */
+        .about-content { display: flex; gap: 50px; align-items: center; }
+        .about-content img { max-width: 48%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); }
+        .about-content div { flex: 1; }
+        .about-content h3 { font-size: 1.6rem; margin-bottom: 15px; color: var(--secondary-color); font-weight: 700; }
+        .about-content p { margin-bottom: 18px; color: #555; }
+
+        /* Offers Section */
+        #offers { background: linear-gradient(to bottom, var(--secondary-color) 0%, #2c2c2c 100%); color: var(--light-text); } /* تدرج خفيف للخلفية */
+        #offers .title h2 { color: var(--light-text); }
+        #offers .title p { color: #ccc; }
+        .offers-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; }
+        .offers-items > div { background: rgba(255, 255, 255, 0.05); padding: 35px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; backdrop-filter: blur(3px); }
+        .offers-items > div:hover { transform: translateY(-10px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35); }
+        .offers-items h3 { color: var(--primary-color); margin-bottom: 20px; font-size: 1.7rem; border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 12px; }
+        .offers-items p { margin-bottom: 12px; font-size: 0.95rem; color: #ddd; line-height: 1.8; display: flex; align-items: flex-start; }
+        .offers-items p i { color: var(--primary-color); margin-inline-end: 8px; font-size: 0.9em; margin-top: 4px; /* محاذاة أفضل */ flex-shrink: 0; } /* منع الأيقونة من الانكماش */
+        .offers-items p.price { font-size: 1.5rem; font-weight: 700; margin-top: 25px; text-align: center; display: block; } /* تعديل السعر */
+        .offers-items p del { color: #aaa; font-size: 1rem; margin-inline-end: 10px; }
+
+        /* Menu Section */
+        #menu { background-color: var(--light-bg); }
+        .menu-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 30px 40px; margin-bottom: 30px; }
+        .menu-item { display: flex; align-items: center; gap: 20px; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .menu-item:hover { transform: translateY(-5px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        .menu-item img { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-color); padding: 2px; }
+        .menu-item h3 { font-size: 1.1rem; margin-bottom: 5px; font-weight: 600; display: flex; justify-content: space-between; align-items: baseline; width: 100%; }
+        .menu-item h3 span { color: var(--primary-color); font-weight: 700; font-size: 1.1rem; margin-inline-start: 10px; white-space: nowrap; /* منع انكسار السعر */ }
+        .menu-item p { font-size: 0.9rem; color: #555; margin: 0; }
+        #menu .btn-third { margin: 30px auto 0; display: block; width: fit-content; }
+
+        /* Daytime Section */
+        #daytime { background-color: #fff; }
+        .daytime-items { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: center; }
+        .daytime-item { background: var(--light-bg); padding: 35px 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .daytime-item h3 { color: var(--primary-color); margin-bottom: 15px; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        .daytime-item p { font-size: 1.1rem; color: var(--secondary-color); font-weight: 600; }
+
+        /* Gallery Section */
+        #gallery { background-color: var(--light-bg); }
+        .img-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .img-gallery img, .img-gallery video { width: 100%; height: 280px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease; display: block; }
+        .img-gallery img:hover, .img-gallery video:hover { transform: scale(1.04); box-shadow: 0 10px 25px rgba(0,0,0,0.2); filter: brightness(1.1); }
+
+        /* Contact Section */
+        #contact { background: linear-gradient(to top, var(--secondary-color) 0%, #2c2c2c 100%); color: var(--light-text); }
+        #contact .title h2 { color: var(--light-text); }
+        #contact .title p { color: #ccc; }
+        .contact-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 50px; align-items: start; }
+        .contact-info h3 { color: var(--primary-color); margin-bottom: 20px; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .contact-info p { margin-bottom: 15px; color: #ddd; display: flex; align-items: center; gap: 12px; font-size: 1rem; }
+        .contact-info i { color: var(--primary-color); width: 22px; text-align: center; font-size: 1.1em; }
+        .contact-info a { transition: color 0.3s ease; } /* انتقال لون الروابط */
+        .contact-info a:hover { color: var(--primary-color); }
+        .contact-info div:not(:last-child) { margin-bottom: 35px; }
+        .contact-info div:last-child a { color: var(--light-text); font-size: 1.6rem; margin-inline-end: 18px; transition: color 0.3s ease, transform 0.3s ease; display: inline-block; }
+        .contact-info div:last-child a:hover { color: var(--primary-color); transform: translateY(-4px); }
+
+        /* Contact Form */
+        form input, form textarea { width: 100%; padding: 14px; margin-bottom: 18px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; background-color: rgba(255, 255, 255, 0.08); color: var(--light-text); font-family: inherit; font-size: 1rem; transition: border-color 0.3s ease, background-color 0.3s ease; }
+        form input:focus, form textarea:focus { outline: none; border-color: var(--primary-color); background-color: rgba(255, 255, 255, 0.1); }
+        form input::placeholder, form textarea::placeholder { color: #bbb; }
+        form textarea { resize: vertical; min-height: 120px; }
+        form button[type="submit"] { width: 100%; }
+
+        /* Footer */
+        #footer { background-color: #111; color: #aaa; text-align: center; padding: 25px 0; font-size: 0.9rem; }
+        #footer b { color: var(--primary-color); font-weight: 600; }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .menu-items { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            #navbar { flex-direction: column; padding: 10px; }
+            #navbar img { margin-bottom: 10px; }
+            #navbar nav ul { flex-direction: column; text-align: center; width: 100%;}
+            #navbar nav ul li { margin: 8px 0; width: 100%; }
+            #navbar nav ul li a { display: block; padding: 10px; } /* جعل الروابط تأخذ عرض كامل */
+            header h1 { font-size: 2.8rem; }
+            header h2 { font-size: 1.5rem; }
+            header p { font-size: 1.1rem; }
+            .title h2 { font-size: 2rem; }
+            .about-content { flex-direction: column; }
+            .about-content img { max-width: 80%; margin-top: 30px; }
+            .contact-content { grid-template-columns: 1fr; }
+            .img-gallery { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+            .daytime-items { grid-template-columns: 1fr; }
+            .offers-items { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+             header h1 { font-size: 2.2rem; }
+             .btn { padding: 10px 25px; font-size: 0.8rem;}
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Header Start -->
+    <header id="home">
+        <div id="navbar">
+            <img src="./image/pngtree-black-bodybuilder.png" alt="SPORT TIME GYM Logo"> 
+            <nav role="navigation">
+                <ul>
+                    <li><a href="#home" class="active">الرئيسية</a></li> 
+                    <li><a href="#about">عنا</a></li>
+                    <li><a href="#offers">العروض</a></li> 
+                    <li><a href="#menu">الباقات</a></li>
+                    <li><a href="#gallery">المعرض</a></li>
+                    <li><a href="#contact">التواصل</a></li>
+                    <li><a href="projects.html">المشاريع</a></li> 
+                </ul>
+            </nav>
+        </div>
+        <div class="content">
+            <h1 class="animated-title">مرحباً بكم في <span class="primary-text">نادي وقت الرياضة</span></h1>
+            <h2 class="animated-subtitle">النادي الأضخم في تعز</h2> 
+            <p class="animated-paragraph">هنا فقط يمكنك بناء الجسم الذي لطالما حلمت به وتحقيق أهدافك الصحية.</p>
+            <a href="form.html" class="btn btn-primary animated-button">انضم إلينا الآن!</a>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <main>
+        <!-- About Section Start -->
+        <section id="about" dir="rtl"> 
+            <div class="container">
+                <div class="title">
+                    <h2>النادي الاضخم في تعز</h2> 
+                    <p>نادي للتخسيس وبناء الأجسام والألعاب القتالية بأنواعها متميز بالخدمات الفريدة</p>
+                </div>
+                <div class="about-content">
+                    <div>
+                        <p>نادي للتخسيس وبناء الأجسام والألعاب القتالية بأنواعها متميز بالخدمات الفريدة من جاكوزي وسونا ومع كادر مدربين محترفين وموقع يتوسط قلب المدينة ويوفر آلات غير موجودة في أي نادي آخر وبإشتراكات منافسة للجميع وهناك فترات للنساء وأخرى للرجال.</p>
+                        <p>نتميز بتوفير أحدث الأجهزة العالمية وكادر تدريبي متخصص، بالإضافة إلى مرافق متكاملة تشمل الساونا والجاكوزي لضمان تجربة رياضية وصحية متكاملة تلبي كافة احتياجاتكم.</p>
+                        <a href="#contact" class="btn btn-secondary">تواصل معنا للمزيد</a> 
+                    </div>
+                    <img src="./image/4 in 1.jpg" alt="صالة النادي">
+                </div>
+            </div>
+        </section>
+        <!-- About Section End -->
+
+        <!-- Offers Section Start -->
+        <section id="offers">
+            <div class="container">
+                <div class="title">
+                    <h2>VIP اشتراكات الـ</h2> 
+                    <p>اكثر من سنتين في الريادة</p> 
+                </div>
+                <div class="offers-items" dir="rtl">
+                    <div>
+                        <h3>باقة سنة</h3>
+                        <p><i class="fas fa-check-circle text-success me-2"></i>جلسة تقييم لياقة بدنية مجانية.</p>
+                        <p><i class="fas fa-check-circle text-success me-2"></i>خصم 10% على منتجات المتجر.</p>
+                        <p><i class="fas fa-check-circle text-success me-2"></i>جلسات تدريب جماعي غير محدودة.</p>
+                        <p><i class="fas fa-check-circle text-success me-2"></i>دخول مجاني لفعاليات النادي.</p>
+                        <p><i class="fas fa-check-circle text-success me-2"></i>برنامج تدريبي شخصي يُحدّث دورياً.</p>
+                        <p class="price"><del>130,000</del> <span class="primary-text">110,000 ريال</span></p>
+                    </div>
+                    <div>
+                        <h3>باقة سنتين</h3>
+                        <p><i class="fas fa-star text-warning me-2"></i>جلسة شهرية مجانية مع مدرب خاص.</p>
+                        <p><i class="fas fa-star text-warning me-2"></i>خصم 15% على منتجات المتجر.</p>
+                        <p><i class="fas fa-star text-warning me-2"></i>تجميد الاشتراك حتى 3 أشهر.</p>
+                        <p><i class="fas fa-star text-warning me-2"></i>برنامج تغذية مخصص وتقييم شهري.</p>
+                        <p><i class="fas fa-star text-warning me-2"></i>دعوة صديق للتدريب مرتين شهريًا.</p>
+                        <p class="price"><del>200,000</del> <span class="primary-text">150,000 ريال</span></p>
+                    </div>
+                    <div>
+                        <h3>باقة ثلاث سنين</h3>
+                         <p><i class="fas fa-crown text-info me-2"></i>مدرب خاص مجاني لشهر واحد سنوياً.</p> 
+                         <p><i class="fas fa-crown text-info me-2"></i>خصم 20% دائم على منتجات المتجر.</p>
+                         <p><i class="fas fa-crown text-info me-2"></i>استشارات طبية شهرية.</p>
+                         <p><i class="fas fa-crown text-info me-2"></i>تجميد الاشتراك حتى 6 أشهر.</p>
+                         <p><i class="fas fa-crown text-info me-2"></i>حصص حصرية وورش عمل للنخبة.</p>
+                        <p class="price"><del>270,000</del> <span class="primary-text">210,000 ريال</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Offers Section End -->
+
+        <!-- Menu Section Start -->
+        <section id="menu">
+            <div class="container">
+                <div class="title">
+                    <h2>الباقات المميزة</h2>
+                    <p>%10 قم بدعوة زميلك للاشتراك بالنادي واحصل على خصم</p> 
+                </div>
+                <div class="menu-items" >
+                    <div class="menu-items-left">
+                        <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة الأساسية الشهرية<span class="primary-text">15,000 ر.ي</span></h3><p>دخول غير محدود للمرافق الأساسية لمـــــــــدة شهر، مناسبة للتجربة وبدايـــــة التدريبات بتكلفة منخفضــــــــــة.</p></div></div>
+                        <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة الأساسية السنوية <span class="primary-text">90,000 ر.ي</span></h3><p>اشتراك سنوي بدخول غير محدود للمرافق الأساسية، مع خصومات على التدريب الشخصي والخدمات الإضافية.</p></div></div>
+                        <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة التدريب الشخصي<span class="primary-text">25,000 ر.ي</span></h3><p>جلســـــات فـــردية مــع مدرب متخصص وبرنامج تدريبي مخصص، لتحقيق أهدافك البدنية بكفاءة ودعم مستمر.</p></div></div>
+                        <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة التدريب الجماعي<span class="primary-text">30,000 ر.ي</span></h3><p>عــدد غير محدود مـــن الحصص الجماعية مثل الـــــزومبا والبيـــــلاتس، لتعزيز الحماس واللياقة بطريقة ممتعة.</p></div></div>
+                        <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة المبتدئين<span class="primary-text">40,000 ر.ي</span></h3><p>برنـــــامج لثلاثة أشهـــــــر يشمل توجيهًا تدريبيًـــا أساسيًا للمبتدئين، يســــــاعدهم على تعلــم الأساسيات بمرونة.</p></div></div>
+                    </div>
+                    <div class="menu-items-right">
+                         <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة اللياقة البدنية<span class="primary-text">15,000 ر.ي</span></h3><p>تـــــركز على تعزيز اللياقــة العامة من خلال حصص الكارديو والمقاومة، مناسبة لتحسين القدرة البدنية تدريجيًا.</p></div></div>
+                         <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة التدريب العالي الكثافة (HIIT)<span class="primary-text">17,000 ر.ي</span></h3><p>حصص أسبــــوعية عـــالية الكثافة لتحسين التحمل وحرق السعــــــرات، مثاليـــــة لمحبي الــــتدريبات المكثفة.</p></div></div>
+                         <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة الاستشفاء البدني<span class="primary-text">17,000 ر.ي</span></h3><p>جلســــــــــــات مســــــــــــــاج أسبوعية واستخدام الســــــــاونا والجاكوزي، مثالية للتعافي بعد التمارين الشاقة.</p></div></div>
+                         <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة العضلات والقوة<span class="primary-text">60,000 ر.ي</span></h3><p>بــــــرنامج مكثف لبناء العضــــــــــلات، مع استشارات تغــــــذية شهرية وتقييم دوري لمتابعـة التطــور البدني.</p></div></div>
+                         <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة المرونة والتوازن<span class="primary-text">40,000 ر.ي</span></h3><p>جلسات يوجـــــــــا وبيلاتس لزيادة المرونة والتـــــــــوازن، مناسبــــــــة لتحسين الحــــــــــركة الجســـــــــــدية.</p></div></div>
+                         <div class="menu-item"> <img src="./image/العضلات والقوة.webp" alt=""><div><h3>باقة العضوية العائلية<span class="primary-text">50,000 ر.ي</span></h3><p>خصــــــــــــــــــــــومات لعائلة العضــــــــــــــــــــــــــو ودخول أفراد العائلة للمــــــــــــرافق بتكلفــــة مخفضة.</p></div></div>
+                    </div>
+                </div>
+                <button class="btn btn-third"><a href="#">استكشاف كامل الباقات</a></button>
+            </div>
+        </section>
+        <!-- Menu Section End -->
+
+        <!-- Daytime section start-->
+        <section id="daytime">
+            <div class="container">
+                 <div class="title">
+                    <h2>أوقات التدريب</h2>
+                    <p>نعمل على مدار الساعة لخدمتكم</p>
+                 </div>
+                <div class="daytime-items" dir="rtl">
+                    <div class="daytime-item">
+                        <h3><i class="fas fa-male me-2"></i> اوقات الرجال</h3>
+                        <p>05:00 صباحاً حتى الساعة 09:00 صباحا</p> 
+                        <p>06:30 مســــاءً حتى الساعة 12:00 صباحا</p> 
+                    </div>
+                    <div class="daytime-item">
+                        <h3><i class="fas fa-female me-2"></i> اوقات النساء</h3>
+                        <p>09:00 صباحاً حتى الساعة 06:00 مساءً</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Daytime section end-->
+
+        <!-- Gallery Section Start -->
+        <section id="gallery">
+            <div class="container">
+                 <div class="title">
+                     <h2>معرض صور النادي</h2>
+                     <p>شاهد بيئة التدريب المحفزة والمرافق الحديثة</p>
+                 </div>
+                <div class="img-gallery">
+                    <img src="./image/معرض1.jpg" alt="gallery1">
+                    <img src="./image/معرض 2.jpg" alt="gallery2">
+                    <img src="./image/معرض 3.jpg" alt="gallery3">
+                    <img src="./image/الرئيسية.jpg" alt="gallery4">
+                    <img src="./image/معرض 3.jpg" alt="gallery5 - Duplicate intentionally?">
+                    <video src="./image/الفيديو.mp4" controls poster="./image/معرض1.jpg">
+                        عذرًا، متصفحك لا يدعم عرض الفيديو.
+                    </video>
+                </div>
+            </div>
+        </section>
+        <!-- Gallery Section End -->
+
+        <!-- Contact Section Start -->
+        <section id="contact">
+            <div class="container" dir="rtl">
+                 <div class="title">
+                     <h2>تواصل معنا</h2>
+                     <p>نحن هنا للإجابة على استفساراتك ومساعدتك</p>
+                 </div>
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <div>
+                            <h3><i class="fas fa-map-marker-alt me-2"></i>العنوان</h3>
+                            <p>مبنى المهيوب التجاري, شارع 26 سبتمبر, تعز</p>
+                        </div>
+                        <div>
+                             <h3><i class="fas fa-phone me-2"></i>الهاتف</h3>
+                            <p><a href="tel:00967738239953">00967738239953</a></p>
+                        </div>
+                        <div>
+                            <h3><i class="fas fa-envelope me-2"></i>البريد الالكتروني</h3>
+                            <p><a href="mailto:nadywqtalryadt@gmail.com">nadywqtalryadt@gmail.com</a></p>
+                        </div>
+                        <div>
+                             <h3><i class="fas fa-clock me-2"></i>اوقات العمل</h3>
+                            <p>5:00 صباحاُ حتى الساعة 12:00 صباحاً</p>
+                            <p style="margin-top: -10px;">(كل يوم عدا الجمعة)</p> 
+                        </div>
+                        <div>
+                             <h3><i class="fas fa-share-alt me-2"></i>تابعنا</h3>
+                            <a href="https://www.facebook.com/nadywqt" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" target="_blank" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a> 
+                            <a href="https://www.instagram.com/spot.ime?igsh=MTdvMnl2cXdhOWN3aQ==" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <form id="contact-form">
+                        <input type="text" name="Name" id="name" placeholder="الاسم الرباعي" required>
+                        <input type="email" name="email" id="email" placeholder="البريد الالكتروني" required>
+                        <input type="text" name="subject" id="subject" placeholder="الموضوع">
+                        <textarea name="message" id="message" cols="30" rows="5" placeholder="رسالتــــــــــك" required></textarea>
+                        <button type="submit" class="btn btn-primary"> <i class="fas fa-paper-plane me-2"></i>ارسال رسالة</button>
+                        <p id="form-status" style="margin-top: 15px; font-weight: 600;"></p> 
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section End -->
+    </main>
+
+    <footer id="footer">
+         Copyright © <span id="current-year"></span> All rights reserved | made by <b>Hussein Fahmi</b>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- --- Embedded JavaScript --- -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Navbar Scroll & Active Link ---
+            const navbar = document.getElementById('navbar');
+            const navLinks = navbar?.querySelectorAll('nav ul li a'); // Added safety check
+            const sections = document.querySelectorAll('section[id]');
+
+            const handleScroll = () => {
+                if (!navbar) return; // Exit if navbar not found
+
+                // Sticky background
+                if (window.scrollY > 50) { // Trigger earlier
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                // Active link highlighting
+                let currentSectionId = '';
+                const scrollPosition = window.scrollY;
+                const navbarHeight = navbar.offsetHeight;
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - navbarHeight - 20; // Adjusted offset
+                    if (scrollPosition >= sectionTop) { // Check if scrolled past the top
+                        currentSectionId = section.getAttribute('id');
+                    }
+                });
+
+                 // Prioritize home if near the top
+                 if (scrollPosition < sections[0]?.offsetTop - navbarHeight * 2) {
+                     currentSectionId = 'home';
+                 }
+                 // Correct for very bottom
+                 if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                    const lastSection = sections[sections.length - 1];
+                    if (lastSection) currentSectionId = lastSection.id;
+                 }
+
+
+                navLinks?.forEach(link => {
+                    link.classList.remove('active');
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref === `#${currentSectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Initial check
+
+            // --- Section Fade-in on Scroll ---
+            const observerOptions = { threshold: 0.1 }; // Appear when 10% visible
+            const observerCallback = (entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            };
+            const sectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+            document.querySelectorAll('section').forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+             // --- Animated Header Text ---
+            const titleElement = document.querySelector('.animated-title');
+            const subtitleElement = document.querySelector('.animated-subtitle');
+            const paragraphElement = document.querySelector('.animated-paragraph');
+            const buttonElement = document.querySelector('.animated-button');
+
+            const animateHeaderElement = (element, delay = 0) => {
+                if (!element) return;
+                const text = element.textContent;
+                element.textContent = ''; // Clear original text
+
+                // Wrap each word in a span
+                text.split(' ').forEach((word, index) => {
+                     // Handle the special span inside h1
+                     if (element.tagName === 'H1' && word.includes('نادي')) {
+                         const parts = word.split(/(نادي وقت الرياضة)/); // Split keeping the delimiter
+                         parts.forEach(part => {
+                             if(part.trim()){
+                                const span = document.createElement('span');
+                                if(part === 'نادي وقت الرياضة'){
+                                    span.className = 'primary-text'; // Keep original class
+                                }
+                                span.textContent = part + ' ';
+                                span.style.transitionDelay = `${delay + index * 0.08}s`; // Stagger animation
+                                element.appendChild(span);
+                             }
+                         });
+                     } else if (word.trim()) { // Regular word
+                        const span = document.createElement('span');
+                        span.textContent = word + ' ';
+                        span.style.transitionDelay = `${delay + index * 0.08}s`;
+                        element.appendChild(span);
+                     }
+                });
+
+                 // Trigger animation by adding class after setup
+                 requestAnimationFrame(() => {
+                     element.querySelectorAll('span').forEach(span => {
+                         span.style.opacity = '1';
+                         span.style.transform = 'translateY(0)';
+                     });
+                 });
+            }
+
+            // Animate header elements sequentially
+            if (titleElement) animateHeaderElement(titleElement, 0);
+            if (subtitleElement) animateHeaderElement(subtitleElement, 0.4); // Start slightly later
+             if (paragraphElement) {
+                 paragraphElement.style.opacity = '0';
+                 paragraphElement.style.transform = 'translateY(20px)';
+                 paragraphElement.style.transition = 'opacity 0.6s ease-out 0.8s, transform 0.6s ease-out 0.8s';
+                 requestAnimationFrame(() => {
+                     paragraphElement.style.opacity = '1';
+                     paragraphElement.style.transform = 'translateY(0)';
+                 });
+            }
+             if (buttonElement) {
+                 buttonElement.style.opacity = '0';
+                 buttonElement.style.transform = 'translateY(20px)';
+                 buttonElement.style.transition = 'opacity 0.6s ease-out 1s, transform 0.6s ease-out 1s';
+                  requestAnimationFrame(() => {
+                     buttonElement.style.opacity = '1';
+                     buttonElement.style.transform = 'translateY(0)';
+                  });
+             }
+
+
+            // --- Footer Year ---
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+            // --- Contact Form Simulation ---
+            const contactForm = document.getElementById('contact-form');
+            const formStatus = document.getElementById('form-status');
+            if (contactForm && formStatus) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    formStatus.textContent = 'جاري الإرسال...';
+                    formStatus.style.color = '#ffc107';
+                    setTimeout(() => {
+                        formStatus.textContent = 'تم الإرسال بنجاح!';
+                        formStatus.style.color = 'var(--primary-color)';
+                        contactForm.reset();
+                        // Hide status message after a few seconds
+                         setTimeout(() => { formStatus.textContent = ''; }, 4000);
+                    }, 1500);
+                });
+            }
+
+             // --- Optional: Counter Animation for Prices ---
+             // Uncomment this section if you want the price counting effect
+             
+             const priceObserverOptions = { threshold: 0.5 }; // Trigger when 50% visible
+             const countUp = (el) => {
+                 const targetValue = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10); // Extract number
+                 const duration = 1500; // Animation duration in ms
+                 const frameDuration = 1000 / 60; // 60fps
+                 const totalFrames = Math.round(duration / frameDuration);
+                 let frame = 0;
+
+                 const counter = setInterval(() => {
+                     frame++;
+                     const progress = frame / totalFrames;
+                     const currentVal = Math.round(targetValue * progress); // Simple linear count
+
+                     // Format with comma for thousands and add currency
+                     el.textContent = currentVal.toLocaleString('ar-EG') + ' ريال'; // Adjust locale if needed
+
+                     if (frame === totalFrames) {
+                         clearInterval(counter);
+                         el.textContent = targetValue.toLocaleString('ar-EG') + ' ريال'; // Ensure final value is exact
+                     }
+                 }, frameDuration);
+             };
+
+             const priceObserverCallback = (entries, observer) => {
+                 entries.forEach(entry => {
+                     if (entry.isIntersecting) {
+                         const priceSpan = entry.target.querySelector('.primary-text'); // Target the price span
+                         if (priceSpan && !priceSpan.classList.contains('counted')) {
+                            priceSpan.classList.add('counted'); // Prevent re-counting
+                            countUp(priceSpan);
+                         }
+                         // We don't unobserve here in case the user scrolls back up quickly
+                         // observer.unobserve(entry.target);
+                     }
+                 });
+             };
+             const priceObserver = new IntersectionObserver(priceObserverCallback, priceObserverOptions);
+             const offerItems = document.querySelectorAll('#offers .offers-items > div');
+             const menuItems = document.querySelectorAll('#menu .menu-item');
+             offerItems.forEach(item => priceObserver.observe(item));
+             menuItems.forEach(item => priceObserver.observe(item));
+             
+
+        });
+    </script>
+
+</body>
+
+</html>
